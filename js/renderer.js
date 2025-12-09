@@ -186,21 +186,47 @@ class PixelRenderer {
     drawBackground(offsetX = 0) {
         const ctx = this.ctx;
         const canvas = ctx.canvas;
-        
-        // Background gradient
+
+        // Background gradient (darker, more ominous)
         const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        gradient.addColorStop(0, '#1a1d29');
+        gradient.addColorStop(0, '#0f1117');
+        gradient.addColorStop(0.5, '#1a1d29');
         gradient.addColorStop(1, '#24283b');
-        
+
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Distant windows (parallax layer)
-        ctx.fillStyle = 'rgba(122, 162, 247, 0.1)';
-        for (let i = 0; i < 5; i++) {
-            const x = (i * 200 - offsetX * 0.3) % canvas.width;
-            ctx.fillRect(x, 100, 80, 120);
+
+        // Distant windows (parallax layer) - dimmer for horror atmosphere
+        ctx.fillStyle = 'rgba(122, 162, 247, 0.05)';
+        for (let i = 0; i < 8; i++) {
+            const x = (i * 300 - offsetX * 0.2) % (canvas.width + 300);
+            const flickerIntensity = Math.random() > 0.95 ? 0.08 : 0.05;
+            ctx.fillStyle = `rgba(122, 162, 247, ${flickerIntensity})`;
+            ctx.fillRect(x, 80 + (i % 3) * 60, 60, 100);
         }
+
+        // Add subtle fog/mist effect
+        const fogGradient = ctx.createLinearGradient(0, canvas.height - 300, 0, canvas.height);
+        fogGradient.addColorStop(0, 'rgba(45, 50, 80, 0)');
+        fogGradient.addColorStop(1, 'rgba(45, 50, 80, 0.15)');
+        ctx.fillStyle = fogGradient;
+        ctx.fillRect(0, canvas.height - 300, canvas.width, 300);
+    }
+
+    // Draw vignette effect for atmosphere
+    drawVignette(canvas) {
+        const ctx = this.ctx;
+
+        // Vignette effect
+        const gradient = ctx.createRadialGradient(
+            canvas.width / 2, canvas.height / 2, canvas.height * 0.3,
+            canvas.width / 2, canvas.height / 2, canvas.height * 0.8
+        );
+        gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 }
 

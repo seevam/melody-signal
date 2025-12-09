@@ -11,6 +11,7 @@ class Game {
         // Game systems
         this.player = null;
         this.npcs = [];
+        this.level = null;
         this.stealthSystem = new StealthSystem();
         this.evidenceSystem = new EvidenceSystem();
 
@@ -157,16 +158,17 @@ class Game {
         this.mainMenu.classList.add('hidden');
         this.gameContainer.classList.remove('hidden');
 
-        // Initialize player
-        this.player = new Player(200, 800);
+        // Initialize level
+        this.level = new Level();
 
-        // Initialize NPCs (example)
-        this.npcs = [
-            new NPC(600, 800, [
-                { x: 600, y: 800 },
-                { x: 900, y: 800 }
-            ])
-        ];
+        // Initialize player at spawn point
+        const spawnPoint = this.level.spawnPoint;
+        this.player = new Player(spawnPoint.x, spawnPoint.y);
+
+        // Initialize NPCs from level data
+        this.npcs = this.level.data.npcs.map(npcData => {
+            return new NPC(npcData.x, npcData.y, npcData.patrolRoute);
+        });
 
         // Start game
         this.state = GAME_STATES.PLAYING;
@@ -255,20 +257,14 @@ class Game {
         // Draw background with parallax
         this.renderer.drawBackground(this.cameraX);
 
-        // Draw hospital floor
-        this.renderer.drawHospitalFloor(0, 900, this.canvas.width, 200);
-
-        // Draw walls/environment (example)
-        this.renderer.drawWall(50, 700, 100, 200);
-        this.renderer.drawWall(this.canvas.width - 150, 700, 100, 200);
-
-        // Draw evidence items (example)
-        this.renderer.drawEvidence(300, 870, false);
-        this.renderer.drawEvidence(600, 870, false);
-
         // Save context for camera transform
         this.ctx.save();
         this.ctx.translate(-this.cameraX, 0);
+
+        // Draw level (floor, walls, furniture, decorations, evidence)
+        if (this.level) {
+            this.level.draw(this.renderer, this.cameraX);
+        }
 
         // Draw NPCs
         this.npcs.forEach(npc => {
@@ -283,11 +279,14 @@ class Game {
         // Restore context
         this.ctx.restore();
 
+        // Draw vignette effect on top
+        this.renderer.drawVignette(this.canvas);
+
         // Update camera to follow player
-        if (this.player) {
+        if (this.player && this.level) {
             const targetCameraX = this.player.x - this.canvas.width / 2;
             this.cameraX += (targetCameraX - this.cameraX) * 0.1; // Smooth camera
-            this.cameraX = Math.max(0, this.cameraX); // Don't go past left edge
+            this.cameraX = Math.max(0, Math.min(this.cameraX, this.level.width - this.canvas.width));
         }
     }
 

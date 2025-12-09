@@ -25,20 +25,32 @@ class Player {
         this.keysPressed = {};
     }
     
-    update(deltaTime) {
+    update(deltaTime, keys = {}) {
+        // Update keys
+        this.keysPressed = keys;
+
+        // Handle sprint
+        this.isSprinting = CONFIG.KEYS.SPRINT.some(key => keys[key]) && this.stamina > 0;
+
+        // Handle crouch
+        this.isCrouching = CONFIG.KEYS.CROUCH.some(key => keys[key]);
+        if (this.isCrouching) {
+            this.state = PLAYER_STATES.CROUCHING;
+        }
+
         // Handle horizontal movement
         this.velocityX = 0;
-        
+
         if (this.isKeyPressed(CONFIG.KEYS.MOVE_LEFT) && !this.isCrouching) {
-            const speed = this.isSprinting && this.stamina > 0 
-                ? -CONFIG.PLAYER.RUN_SPEED 
+            const speed = this.isSprinting && this.stamina > 0
+                ? -CONFIG.PLAYER.RUN_SPEED
                 : -CONFIG.PLAYER.WALK_SPEED;
             this.velocityX = speed;
             this.state = this.isSprinting ? PLAYER_STATES.RUNNING : PLAYER_STATES.WALKING;
             this.facing = 'left';
         } else if (this.isKeyPressed(CONFIG.KEYS.MOVE_RIGHT) && !this.isCrouching) {
-            const speed = this.isSprinting && this.stamina > 0 
-                ? CONFIG.PLAYER.RUN_SPEED 
+            const speed = this.isSprinting && this.stamina > 0
+                ? CONFIG.PLAYER.RUN_SPEED
                 : CONFIG.PLAYER.WALK_SPEED;
             this.velocityX = speed;
             this.state = this.isSprinting ? PLAYER_STATES.RUNNING : PLAYER_STATES.WALKING;
