@@ -17,14 +17,35 @@
       "name": "Sarah",
       "position": {"x": 600, "y": 852},
       "patrolPoints": []
+    },
+    {
+      "type": "ally",
+      "name": "William",
+      "position": {"x": 1100, "y": 852},
+      "patrolPoints": [
+        {"x": 1100, "y": 852},
+        {"x": 1300, "y": 852}
+      ]
     }
   ],
   "evidence": [
     {
       "id": "hospital_map",
       "name": "Hospital Map",
-      "description": "Layout of Saint Cross Hospital",
+      "description": "Layout of Saint Cross Hospital showing main reception, mortuary, record room, and staff areas.",
       "position": {"x": 300, "y": 850}
+    },
+    {
+      "id": "visitor_log",
+      "name": "Visitor Log",
+      "description": "Sign-in sheet showing unusual patterns of late-night visitors to restricted areas.",
+      "position": {"x": 750, "y": 850}
+    },
+    {
+      "id": "pamphlet",
+      "name": "Hospital Pamphlet",
+      "description": "Welcome brochure listing hospital services. Something about the 'organ donation program' seems off.",
+      "position": {"x": 250, "y": 850}
     }
   ],
   "objectives": [
@@ -36,6 +57,16 @@
     {
       "id": "find_map",
       "description": "Find hospital map",
+      "completed": false
+    },
+    {
+      "id": "talk_to_receptionist",
+      "description": "Speak with the receptionist about Fiona",
+      "completed": false
+    },
+    {
+      "id": "collect_evidence",
+      "description": "Collect evidence in the reception area",
       "completed": false
     }
   ]
