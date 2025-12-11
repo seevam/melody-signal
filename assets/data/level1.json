@@ -9,22 +9,48 @@
       "position": {"x": 400, "y": 852},
       "patrolPoints": [
         {"x": 400, "y": 852},
-        {"x": 800, "y": 852}
+        {"x": 900, "y": 852},
+        {"x": 900, "y": 700},
+        {"x": 400, "y": 700}
       ]
     },
     {
       "type": "receptionist",
       "name": "Sarah",
-      "position": {"x": 600, "y": 852},
+      "position": {"x": 650, "y": 800},
       "patrolPoints": []
     },
     {
       "type": "ally",
       "name": "William",
-      "position": {"x": 1100, "y": 852},
+      "position": {"x": 200, "y": 852},
       "patrolPoints": [
-        {"x": 1100, "y": 852},
-        {"x": 1300, "y": 852}
+        {"x": 200, "y": 852},
+        {"x": 350, "y": 852}
+      ]
+    },
+    {
+      "type": "security",
+      "name": "Guard2",
+      "position": {"x": 1400, "y": 620},
+      "patrolPoints": [
+        {"x": 1200, "y": 620},
+        {"x": 1600, "y": 620}
+      ]
+    },
+    {
+      "type": "receptionist",
+      "name": "Patient1",
+      "position": {"x": 180, "y": 790},
+      "patrolPoints": []
+    },
+    {
+      "type": "receptionist",
+      "name": "Patient2",
+      "position": {"x": 1150, "y": 620},
+      "patrolPoints": [
+        {"x": 1150, "y": 620},
+        {"x": 1250, "y": 620}
       ]
     }
   ],
@@ -33,30 +59,31 @@
       "id": "hospital_map",
       "name": "Hospital Map",
       "description": "Layout of Saint Cross Hospital showing main reception, mortuary, record room, and staff areas.",
-      "position": {"x": 300, "y": 850}
+      "position": {"x": 820, "y": 815}
     },
     {
       "id": "visitor_log",
       "name": "Visitor Log",
       "description": "Sign-in sheet showing unusual patterns of late-night visitors to restricted areas.",
-      "position": {"x": 750, "y": 850}
+      "position": {"x": 680, "y": 810}
     },
     {
       "id": "pamphlet",
       "name": "Hospital Pamphlet",
       "description": "Welcome brochure listing hospital services. Something about the 'organ donation program' seems off.",
-      "position": {"x": 250, "y": 850}
+      "position": {"x": 220, "y": 795}
+    },
+    {
+      "id": "hidden_note",
+      "name": "Crumpled Note",
+      "description": "A hastily written note: 'They're taking people at night. If you're reading this, GET OUT!'",
+      "position": {"x": 1320, "y": 630}
     }
   ],
   "objectives": [
     {
       "id": "enter_hospital",
-      "description": "Enter Saint Cross Hospital",
-      "completed": false
-    },
-    {
-      "id": "find_map",
-      "description": "Find hospital map",
+      "description": "Explore the hospital reception area",
       "completed": false
     },
     {
@@ -65,8 +92,23 @@
       "completed": false
     },
     {
+      "id": "get_visitor_pass",
+      "description": "Obtain a visitor pass from the printer",
+      "completed": false
+    },
+    {
+      "id": "find_access_code",
+      "description": "Find the security access code",
+      "completed": false
+    },
+    {
       "id": "collect_evidence",
-      "description": "Collect evidence in the reception area",
+      "description": "Collect at least 3 pieces of evidence",
+      "completed": false
+    },
+    {
+      "id": "explore_upper_area",
+      "description": "Explore the elevated security area",
       "completed": false
     }
   ]

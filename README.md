@@ -26,30 +26,93 @@ A 2D first-person investigation horror/thriller game where players must uncover 
 - Uncover the truth about your sister's death
 - Complete investigation within 30 days
 
-## 📖 Level 1: Reception (Completed)
+## 📖 Level 1: Reception (Enhanced - Version 2.0)
 
-### Features
-- **Hospital Reception Area**: Fully playable starting level with reception desk, waiting area, and hallways
-- **NPCs**:
-  - **Sarah (Receptionist)**: Neutral NPC who provides information about your sister
-  - **Marcus (Security Guard)**: Patrols the reception area, avoid his detection cone
-  - **William (Ally)**: Friendly patient who offers helpful hints and warnings
-- **Evidence Collection**: Three collectible evidence items:
+### Core Features
+- **Expansive Hospital Reception**: Multi-level area with ground floor, elevated platforms, and mezzanine
+- **6 NPCs**:
+  - **Sarah (Receptionist)**: Neutral NPC at reception desk with crucial information
+  - **Marcus (Security Guard)**: Patrols ground floor with advanced detection
+  - **William (Ally)**: Friendly patient who offers hints and warnings
+  - **Guard2**: Elite security patrolling the upper security area
+  - **Patient1 & Patient2**: Background NPCs adding atmosphere
+- **4 Evidence Items**:
   - Hospital Map
   - Visitor Log
   - Hospital Pamphlet
-- **Dialogue System**: Branching conversations with choice consequences
-- **Stealth Mechanics**: Avoid security guard patrols and manage suspicion meter
-- **Platforming**: Jump, run, and navigate the hospital environment
-- **Objective Tracking**: Dynamic HUD showing current objectives
+  - Hidden Crumpled Note (secret on upper level)
+- **5 Interactive Objects**:
+  - **Visitor Pass Printer**: Puzzle - requires talking to Sarah first
+  - **Security Computer**: Hack to find access code (2845)
+  - **Filing Cabinet**: Search for additional evidence
+  - **Vending Machine**: Restore 25 health points
+  - **Hospital Directory Kiosk**: Get helpful location information
 
-### Gameplay Tips
-- Talk to NPCs to gather information about the hospital
-- Collect all evidence items in the reception area
-- Avoid being spotted by Marcus (the security guard)
-- Press E near evidence or NPCs to interact
-- Use Shift to sprint, but watch your stamina meter
-- Your choices in dialogue affect the suspicion level
+### New Gameplay Mechanics
+
+#### 🫥 Hiding System
+- Hide in lockers and behind filing cabinets
+- Reduces suspicion by 20 points instantly
+- Enemies cannot detect you while hidden
+- Press [E] to enter/exit hiding spots
+- Player becomes semi-transparent when hiding
+
+#### 🧩 Puzzle Systems
+- **Visitor Pass Quest**: Talk to Sarah → Print pass → Access restricted areas
+- **Access Code Hunt**: Hack security computer → Get code 2845 → Unlock records room
+- **Evidence Chain**: Collect 3+ evidence pieces to complete objective
+
+#### 🏃 Advanced Platforming
+- Multi-level environment with platforms and stairs
+- One-way platforms (jump through from below)
+- Elevated security office area
+- Vertical exploration with secret areas
+
+#### ✨ Visual Feedback
+- **Particle Effects**: Collect items and complete objectives with visual celebrations
+- **Notifications**: Real-time feedback for all actions and discoveries
+- **Camera Shake**: Dynamic camera effects (expandable for chase scenes)
+- **Hiding Indicator**: "HIDING" text appears when concealed
+
+#### 🎮 Enhanced Interactions
+- Glow effects on all interactive objects
+- Different object types (computers, printers, vending machines, kiosks)
+- Health restoration from vending machine (one-time use)
+- Cabinet searching with evidence rewards
+
+### Level Layout
+```
+Upper Level (Platforms)
+├── Security Office
+├── Lockers (hiding spots)
+├── Security Computer (hackable)
+└── Secret Evidence Location
+
+Ground Floor
+├── Reception Desk
+├── Waiting Area (benches, coffee table)
+├── Filing Cabinets (hiding + searching)
+├── Vending Machines
+├── Hospital Directory Kiosk
+└── Multiple Patrol Routes
+```
+
+### 6 Objectives
+1. Explore the hospital reception area
+2. Speak with receptionist about Fiona
+3. Obtain visitor pass from printer
+4. Find security access code
+5. Collect at least 3 pieces of evidence
+6. Explore the elevated security area
+
+### Advanced Gameplay Tips
+- **Stealth**: Use filing cabinets and lockers to hide from guards
+- **Timing**: Wait for guard patrol patterns before moving
+- **Exploration**: Climb to the upper area for secrets and better vantage
+- **Puzzles**: Talk to Sarah before trying the visitor pass printer
+- **Resources**: Use the vending machine strategically for health
+- **Evidence**: Check the directory kiosk for hints on locations
+- **Objectives**: Complete all 6 objectives for full level completion
 
 ## 🚀 Play Online
 
@@ -95,22 +158,51 @@ melody-signal/
 
 ## 🎨 Features Implemented
 
+### Core Mechanics
 - ✅ Player movement with physics (walk, run, jump)
 - ✅ Stamina system for sprinting
 - ✅ Health system with UI
 - ✅ Day/Night cycle counter (30-day limit)
+- ✅ Advanced collision detection (platforms, walls, furniture)
+- ✅ One-way platform physics
+- ✅ Camera follow with smooth interpolation
+- ✅ Camera shake system
+
+### Stealth & AI
 - ✅ Stealth and detection system
-- ✅ NPC AI with patrol routes
-- ✅ Detection cones for security
+- ✅ **NEW**: Hiding mechanics (lockers, cabinets)
+- ✅ NPC AI with complex patrol routes
+- ✅ Detection cones with visual feedback
+- ✅ Chase behavior when detected
+- ✅ Hidden player immunity from detection
+
+### Interaction & Puzzles
 - ✅ Evidence collection system
+- ✅ **NEW**: 5 types of interactive objects
+- ✅ **NEW**: Visitor pass puzzle system
+- ✅ **NEW**: Computer hacking mechanic
+- ✅ **NEW**: Searchable containers
+- ✅ **NEW**: Health restoration items
 - ✅ Inventory with tabs (Evidence, Items, Notes)
 - ✅ Branching dialogue system
-- ✅ Objective tracking
-- ✅ Collision detection
-- ✅ Camera follow system
+- ✅ Objective tracking (6 objectives)
+
+### Visual & Audio
+- ✅ Pixel art renderer with effects
+- ✅ **NEW**: Particle effect system
+- ✅ **NEW**: Real-time notifications
+- ✅ **NEW**: Glow effects on interactables
+- ✅ **NEW**: Hiding transparency effect
+- ✅ Enhanced parallax backgrounds
+- ✅ Multi-type object rendering
+
+### UI & Menus
 - ✅ Pause menu
 - ✅ Settings menu
-- ✅ Pixel art renderer with effects
+- ✅ Inventory system
+- ✅ **NEW**: Notification toast system
+- ✅ HUD with all stats
+- ✅ Interaction prompts
 
 ## 🔜 Coming Soon (Future Levels)
 

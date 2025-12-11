@@ -186,21 +186,141 @@ class PixelRenderer {
     drawBackground(offsetX = 0) {
         const ctx = this.ctx;
         const canvas = ctx.canvas;
-        
+
         // Background gradient
         const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
         gradient.addColorStop(0, '#1a1d29');
         gradient.addColorStop(1, '#24283b');
-        
+
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         // Distant windows (parallax layer)
         ctx.fillStyle = 'rgba(122, 162, 247, 0.1)';
-        for (let i = 0; i < 5; i++) {
-            const x = (i * 200 - offsetX * 0.3) % canvas.width;
+        for (let i = 0; i < 10; i++) {
+            const x = (i * 200 - offsetX * 0.3) % (canvas.width + 200);
             ctx.fillRect(x, 100, 80, 120);
         }
+    }
+
+    // Draw platform
+    drawPlatform(x, y, width, height) {
+        const ctx = this.ctx;
+
+        // Platform surface
+        ctx.fillStyle = this.colors.wall;
+        ctx.fillRect(x, y, width, height);
+
+        // Platform edge highlight
+        ctx.strokeStyle = this.colors.accent;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, width, 4);
+
+        // Pattern
+        ctx.fillStyle = 'rgba(122, 162, 247, 0.1)';
+        for (let i = 0; i < width; i += 10) {
+            ctx.fillRect(x + i, y + 2, 2, height - 4);
+        }
+    }
+
+    // Draw hiding spot
+    drawHidingSpot(x, y, width, height, name) {
+        const ctx = this.ctx;
+
+        if (name === 'locker') {
+            // Locker
+            ctx.fillStyle = this.colors.wall;
+            ctx.fillRect(x, y, width, height);
+
+            ctx.strokeStyle = this.colors.accent;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+
+            // Locker door
+            ctx.strokeRect(x + 2, y + 2, width - 4, height - 4);
+
+            // Handle
+            ctx.fillStyle = '#7aa2f7';
+            ctx.fillRect(x + width - 8, y + height/2 - 3, 4, 6);
+        } else {
+            // Generic hiding spot
+            ctx.fillStyle = this.colors.wall;
+            ctx.fillRect(x, y, width, height);
+
+            ctx.strokeStyle = '#9ece6a';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, width, height);
+        }
+    }
+
+    // Draw interactive object
+    drawInteractive(x, y, width, height, type) {
+        const ctx = this.ctx;
+
+        // Glow effect
+        const gradient = ctx.createRadialGradient(
+            x + width/2, y + height/2, 0,
+            x + width/2, y + height/2, Math.max(width, height)
+        );
+        gradient.addColorStop(0, 'rgba(122, 162, 247, 0.3)');
+        gradient.addColorStop(1, 'rgba(122, 162, 247, 0)');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x - 10, y - 10, width + 20, height + 20);
+
+        // Main object
+        ctx.fillStyle = this.colors.wall;
+        ctx.fillRect(x, y, width, height);
+
+        ctx.strokeStyle = this.colors.accent;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, width, height);
+
+        // Type-specific details
+        if (type === 'computer') {
+            // Screen
+            ctx.fillStyle = '#7aa2f7';
+            ctx.fillRect(x + 4, y + 4, width - 8, height - 12);
+
+            // Keyboard
+            ctx.fillStyle = '#414868';
+            ctx.fillRect(x + 4, y + height - 6, width - 8, 4);
+        } else if (type === 'vending') {
+            // Items inside
+            ctx.fillStyle = '#f7768e';
+            ctx.fillRect(x + 4, y + 8, 6, 6);
+            ctx.fillStyle = '#9ece6a';
+            ctx.fillRect(x + 12, y + 8, 6, 6);
+            ctx.fillStyle = '#e0af68';
+            ctx.fillRect(x + 20, y + 8, 6, 6);
+        } else if (type === 'printer') {
+            // Paper tray
+            ctx.fillStyle = '#e0e0e0';
+            ctx.fillRect(x + 4, y + height/2, width - 8, 4);
+        } else if (type === 'cabinet') {
+            // Drawers
+            for (let i = 0; i < 3; i++) {
+                ctx.strokeRect(x + 2, y + 2 + i * (height/3), width - 4, height/3 - 2);
+            }
+        } else if (type === 'kiosk') {
+            // Screen
+            ctx.fillStyle = '#7aa2f7';
+            ctx.fillRect(x + 6, y + 6, width - 12, height - 12);
+        }
+    }
+
+    // Draw decoration
+    drawDecoration(x, y, width, height) {
+        const ctx = this.ctx;
+
+        // Plant pot
+        ctx.fillStyle = '#8b4513';
+        ctx.fillRect(x, y + height * 0.6, width, height * 0.4);
+
+        // Plant
+        ctx.fillStyle = '#9ece6a';
+        ctx.fillRect(x + width * 0.2, y, width * 0.2, height * 0.7);
+        ctx.fillRect(x + width * 0.5, y, width * 0.2, height * 0.7);
     }
 }
 
