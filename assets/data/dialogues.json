@@ -4,7 +4,7 @@
     "text": "Welcome to Saint Cross Hospital. How may I help you?",
     "choices": [
       {
-        "text": "I'm here to visit a patient.",
+        "text": "I'm here about my sister, Fiona. She was a patient here.",
         "nextDialogue": "sarah_visit"
       },
       {
@@ -16,61 +16,170 @@
   },
   "sarah_visit": {
     "speaker": "Receptionist Sarah",
-    "text": "Of course. What is your relationship to the patient?",
+    "text": "I see. I'm very sorry for your loss. What information do you need?",
     "choices": [
       {
-        "text": "I'm her brother.",
-        "nextDialogue": "sarah_continue"
+        "text": "I want to know what happened to her.",
+        "nextDialogue": "sarah_sympathetic"
       },
       {
-        "text": "Just a friend.",
-        "nextDialogue": "sarah_deny"
+        "text": "Can I see her medical records?",
+        "nextDialogue": "sarah_records"
+      }
+    ]
+  },
+  "sarah_suspicious": {
+    "speaker": "Receptionist Sarah",
+    "text": "I'm sorry, sir, but visitors need to check in. This is a hospital, not a mall.",
+    "choices": [
+      {
+        "text": "Sorry, I'm here to see my sister.",
+        "nextDialogue": "sarah_visit"
+      },
+      {
+        "text": "I'll leave.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "sarah_sympathetic": {
+    "speaker": "Receptionist Sarah",
+    "text": "The official report says it was complications from her surgery. I... I wish I could tell you more, but I don't have access to detailed medical information.",
+    "choices": [
+      {
+        "text": "Thank you for your help.",
+        "nextDialogue": null
+      },
+      {
+        "text": "Something doesn't feel right about this.",
+        "nextDialogue": "sarah_concerned",
+        "suspicionIncrease": 5
+      }
+    ]
+  },
+  "sarah_records": {
+    "speaker": "Receptionist Sarah",
+    "text": "I'm afraid I can't provide medical records without proper authorization. You'd need to speak with the Records Department on the second floor.",
+    "choices": [
+      {
+        "text": "I understand. Thank you.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "sarah_concerned": {
+    "speaker": "Receptionist Sarah",
+    "text": "I... I shouldn't say this, but... *looks around nervously* ...there have been a lot of sudden deaths lately. More than usual. Just... be careful, okay?",
+    "choices": [
+      {
+        "text": "Thank you. I will.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "marcus_greeting": {
+    "speaker": "Security Guard Marcus",
+    "text": "Hey there. You look lost. Can I help you find something?",
+    "choices": [
+      {
+        "text": "Just visiting someone.",
+        "nextDialogue": "marcus_routine"
+      },
+      {
+        "text": "No, I'm fine.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "marcus_routine": {
+    "speaker": "Security Guard Marcus",
+    "text": "Alright. Just make sure you have a visitor pass. We take security seriously around here.",
+    "choices": [
+      {
+        "text": "Of course. Thank you.",
+        "nextDialogue": null
+      },
+      {
+        "text": "Why is security so tight?",
+        "nextDialogue": "marcus_security",
+        "suspicionIncrease": 5
+      }
+    ]
+  },
+  "marcus_security": {
+    "speaker": "Security Guard Marcus",
+    "text": "Standard hospital protocol. Lots of expensive equipment and, you know, patient safety. Nothing to worry about if you're just here to visit.",
+    "choices": [
+      {
+        "text": "Makes sense. Thanks.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "william_greeting": {
+    "speaker": "William",
+    "text": "*smiling warmly* Hey there! You look like you could use a friendly face. First time here?",
+    "choices": [
+      {
+        "text": "Yes, I'm looking for information about my sister.",
+        "nextDialogue": "william_helpful"
+      },
+      {
+        "text": "Just passing through.",
+        "nextDialogue": "william_advice"
+      }
+    ]
+  },
+  "william_helpful": {
+    "speaker": "William",
+    "text": "I'm sorry to hear that. This place can be... confusing. If you need help finding your way around, I've been here a while. I know the layout pretty well.",
+    "choices": [
+      {
+        "text": "That would be helpful, thank you.",
+        "nextDialogue": "william_tips"
+      },
+      {
+        "text": "I'll manage on my own.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "william_advice": {
+    "speaker": "William",
+    "text": "Fair enough. Just a word of advice - be careful around here at night. The staff... they're not all as friendly as they seem during the day.",
+    "choices": [
+      {
+        "text": "What do you mean?",
+        "nextDialogue": "william_warning"
+      },
+      {
+        "text": "Thanks for the tip.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "william_tips": {
+    "speaker": "William",
+    "text": "The records room is on the second floor, but you'll need proper clearance. The mortuary is in the basement. And... *lowers voice* ...avoid the underground lab if you can. Nothing good happens down there.",
+    "choices": [
+      {
+        "text": "Underground lab?",
+        "nextDialogue": "william_warning"
+      },
+      {
+        "text": "Thank you for the information.",
+        "nextDialogue": null
+      }
+    ]
+  },
+  "william_warning": {
+    "speaker": "William",
+    "text": "I've said too much already. Just... trust your instincts. If something feels wrong, it probably is. And if you ever need help, come find me. I'll do what I can.",
+    "choices": [
+      {
+        "text": "I appreciate that. Thank you.",
+        "nextDialogue": null
       }
     ]
   }
 }
-```
-
----
-
-## 12. `.gitignore`
-```
-# Dependencies
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build files
-dist/
-build/
-.cache/
-
-# OS files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# Logs
-*.log
-logs/
-
-# Environment variables
-.env
-.env.local
-
-# Temporary files
-*.tmp
-.temp/
-
-# Debug files
-debug.log
-
-
