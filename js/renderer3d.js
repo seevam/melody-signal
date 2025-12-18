@@ -5,8 +5,8 @@ class Renderer3D {
 
         // Set up Three.js scene
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x1a1d29);
-        this.scene.fog = new THREE.Fog(0x1a1d29, 10, 50);
+        this.scene.background = new THREE.Color(0x2d3142);
+        this.scene.fog = new THREE.Fog(0x2d3142, 15, 60);
 
         // Set up camera (first-person perspective)
         this.camera = new THREE.PerspectiveCamera(
@@ -43,24 +43,26 @@ class Renderer3D {
     }
 
     initLighting() {
-        // Ambient light (dark hospital atmosphere)
-        const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+        // Ambient light (brighter for better visibility)
+        const ambientLight = new THREE.AmbientLight(0x808080, 0.6);
         this.scene.add(ambientLight);
 
         // Main directional light (simulating overhead lights)
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(0, 10, 0);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(5, 10, 5);
         directionalLight.castShadow = true;
-        directionalLight.shadow.camera.left = -20;
-        directionalLight.shadow.camera.right = 20;
-        directionalLight.shadow.camera.top = 20;
-        directionalLight.shadow.camera.bottom = -20;
+        directionalLight.shadow.camera.left = -30;
+        directionalLight.shadow.camera.right = 30;
+        directionalLight.shadow.camera.top = 30;
+        directionalLight.shadow.camera.bottom = -30;
         this.scene.add(directionalLight);
 
-        // Add some flickering point lights for atmosphere
-        this.addPointLight(-5, 3, -5, 0xbb9af7, 0.8);
-        this.addPointLight(5, 3, -5, 0xbb9af7, 0.8);
-        this.addPointLight(0, 3, -15, 0xbb9af7, 0.6);
+        // Add some point lights for atmosphere
+        this.addPointLight(-5, 3, -5, 0xbb9af7, 1.2);
+        this.addPointLight(5, 3, -5, 0xbb9af7, 1.2);
+        this.addPointLight(0, 3, -15, 0xbb9af7, 1.0);
+        this.addPointLight(-5, 3, 10, 0xbb9af7, 1.0);
+        this.addPointLight(5, 3, 10, 0xbb9af7, 1.0);
     }
 
     addPointLight(x, y, z, color, intensity) {
@@ -83,7 +85,7 @@ class Renderer3D {
         // Floor
         const floorGeometry = new THREE.PlaneGeometry(40, 40);
         const floorMaterial = new THREE.MeshStandardMaterial({
-            color: 0x2d3142,
+            color: 0x4a5568,
             roughness: 0.8,
             metalness: 0.2
         });
@@ -99,7 +101,7 @@ class Renderer3D {
 
         // Ceiling
         const ceiling = new THREE.Mesh(floorGeometry, new THREE.MeshStandardMaterial({
-            color: 0x1a1d29,
+            color: 0x3d405b,
             roughness: 1
         }));
         ceiling.rotation.x = Math.PI / 2;
@@ -373,8 +375,10 @@ class Renderer3D {
         // NPC body (using CylinderGeometry instead of CapsuleGeometry for r128 compatibility)
         const bodyGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1.2, 8);
         const bodyMaterial = new THREE.MeshStandardMaterial({
-            color: type === 'security' ? 0x2d4a7c : 0x7d8491,
-            roughness: 0.7
+            color: type === 'security' ? 0x4a7ba7 : 0x9da5b4,
+            roughness: 0.6,
+            emissive: type === 'security' ? 0x2d4a7c : 0x5a6270,
+            emissiveIntensity: 0.2
         });
         const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
         body.position.set(x, y, z);
@@ -383,31 +387,57 @@ class Renderer3D {
         this.scene.add(body);
         this.npcMeshes.push(body);
 
-        // NPC head
+        // NPC head (brighter and more visible)
         const headGeometry = new THREE.SphereGeometry(0.25, 16, 16);
         const headMaterial = new THREE.MeshStandardMaterial({
-            color: 0xfaa687,
-            roughness: 0.8
+            color: 0xfcc89b,
+            roughness: 0.7,
+            emissive: 0xfaa687,
+            emissiveIntensity: 0.1
         });
         const head = new THREE.Mesh(headGeometry, headMaterial);
         head.position.set(x, y + 1, z);
         head.castShadow = true;
         this.scene.add(head);
 
-        // Vision cone (for debugging)
-        const coneGeometry = new THREE.ConeGeometry(0.1, 3, 8);
+        // Vision cone (more visible for debugging)
+        const coneGeometry = new THREE.ConeGeometry(2, 4, 8);
         const coneMaterial = new THREE.MeshBasicMaterial({
-            color: 0xff0000,
+            color: type === 'security' ? 0xff3333 : 0xffaa33,
             transparent: true,
-            opacity: 0.2,
-            wireframe: true
+            opacity: 0.15,
+            wireframe: false
         });
         const cone = new THREE.Mesh(coneGeometry, coneMaterial);
         cone.rotation.x = Math.PI / 2;
-        cone.position.set(x, y + 0.8, z - 1.5);
+        cone.position.set(x, y + 0.8, z - 2);
         this.scene.add(cone);
 
-        return { body, head, visionCone: cone };
+        // Add a name tag above NPC
+        const nameTagGeometry = new THREE.PlaneGeometry(1, 0.3);
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(45, 49, 91, 0.8)';
+        ctx.fillRect(0, 0, 256, 64);
+        ctx.fillStyle = '#bb9af7';
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(name, 128, 32);
+
+        const nameTexture = new THREE.CanvasTexture(canvas);
+        const nameTagMaterial = new THREE.MeshBasicMaterial({
+            map: nameTexture,
+            transparent: true,
+            side: THREE.DoubleSide
+        });
+        const nameTag = new THREE.Mesh(nameTagGeometry, nameTagMaterial);
+        nameTag.position.set(x, y + 1.8, z);
+        this.scene.add(nameTag);
+
+        return { body, head, visionCone: cone, nameTag };
     }
 
     updateNPCPosition(npcMesh, x, y, z, rotation) {
@@ -421,11 +451,17 @@ class Renderer3D {
 
             if (npcMesh.visionCone) {
                 npcMesh.visionCone.position.set(
-                    x + Math.sin(rotation) * 1.5,
+                    x + Math.sin(rotation) * 2,
                     y + 0.8,
-                    z - Math.cos(rotation) * 1.5
+                    z - Math.cos(rotation) * 2
                 );
                 npcMesh.visionCone.rotation.y = rotation;
+            }
+
+            if (npcMesh.nameTag) {
+                npcMesh.nameTag.position.set(x, y + 1.8, z);
+                // Make name tag always face camera
+                npcMesh.nameTag.lookAt(this.camera.position);
             }
         }
     }

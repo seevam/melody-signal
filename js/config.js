@@ -6,8 +6,8 @@ const CONFIG = {
     
     // Player settings
     PLAYER: {
-        WALK_SPEED: 120,
-        RUN_SPEED: 240,
+        WALK_SPEED: 60,
+        RUN_SPEED: 120,
         JUMP_FORCE: -400,
         GRAVITY: 1200,
         MAX_STAMINA: 100,
