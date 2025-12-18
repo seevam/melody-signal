@@ -92,11 +92,17 @@
                     <span class="hud-label">Objective:</span>
                     <span class="objective-text" id="objective-text">Enter Saint Cross Hospital</span>
                 </div>
+                <div class="controls-hint" style="position: absolute; bottom: 0; right: 0; color: rgba(187, 154, 247, 0.6); font-size: 0.7rem; padding: 10px; text-align: right;">
+                    <div>WASD - Move | Mouse - Look | Shift - Sprint | E - Interact | ESC - Pause</div>
+                </div>
             </div>
         </div>
 
         <!-- Game Canvas -->
         <canvas id="game-canvas"></canvas>
+
+        <!-- Crosshair -->
+        <div class="crosshair"></div>
 
         <!-- Interaction Prompt -->
         <div id="interaction-prompt" class="hidden">
@@ -193,13 +199,16 @@
         </div>
     </div>
 
+    <!-- Three.js Library (Local) -->
+    <script src="js/libs/three.min.js"></script>
+
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/evidence.js"></script>
     <script src="js/stealth.js"></script>
     <script src="js/npc.js"></script>
     <script src="js/player.js"></script>
-    <script src="js/renderer.js"></script>
+    <script src="js/renderer3d.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
