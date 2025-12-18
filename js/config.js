@@ -40,12 +40,14 @@ const CONFIG = {
         CURRENT_LEVEL: 1
     },
     
-    // Controls
+    // Controls (3D First-Person)
     KEYS: {
-        MOVE_LEFT: ['ArrowLeft', 'a', 'A'],
-        MOVE_RIGHT: ['ArrowRight', 'd', 'D'],
-        JUMP: [' ', 'w', 'W', 'ArrowUp'],
-        CROUCH: ['Control', 's', 'S', 'ArrowDown'],
+        MOVE_FORWARD: ['w', 'W', 'ArrowUp'],
+        MOVE_BACKWARD: ['s', 'S', 'ArrowDown'],
+        MOVE_LEFT: ['a', 'A', 'ArrowLeft'],
+        MOVE_RIGHT: ['d', 'D', 'ArrowRight'],
+        JUMP: [' '],
+        CROUCH: ['Control', 'c', 'C'],
         SPRINT: ['Shift'],
         INTERACT: ['e', 'E', 'Enter'],
         INVENTORY: ['Tab', 'i', 'I'],
