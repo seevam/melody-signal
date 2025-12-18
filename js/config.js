@@ -19,18 +19,18 @@ const CONFIG = {
     // Stealth settings
     STEALTH: {
         MAX_SUSPICION: 100,
-        SUSPICION_DECAY_RATE: 5,
+        SUSPICION_DECAY_RATE: 10,
         DETECTION_THRESHOLD: 75,
-        SUSPICION_INCREASE_BASE: 10
+        SUSPICION_INCREASE_BASE: 5
     },
     
     // NPC settings
     NPC: {
-        DETECTION_RANGE: 200,
-        DETECTION_ANGLE: 90,
+        DETECTION_RANGE: 100,
+        DETECTION_ANGLE: 60,
         PATROL_SPEED: 80,
         CHASE_SPEED: 150,
-        ALERT_THRESHOLD: 30
+        ALERT_THRESHOLD: 50
     },
     
     // Game settings
