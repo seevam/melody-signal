@@ -13,17 +13,11 @@ class NPC {
         this.detectionAngle = CONFIG.NPC.DETECTION_ANGLE * (Math.PI / 180); // Convert to radians
         this.alertLevel = 0;
         this.rotation = 0; // Y rotation in radians
-        this.idleTimer = 0;
-        this.idleDuration = 3;
+        this.idleTimer = this.idleDuration = 3;
 
         // Animation
         this.animationFrame = 0;
         this.animationTimer = 0;
-
-        // Start patrol if points exist
-        if (this.patrolPoints.length > 0) {
-            this.state = NPC_STATES.PATROL;
-        }
     }
 
     update(deltaTime, player) {

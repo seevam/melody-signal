@@ -78,11 +78,22 @@ class Game {
                     npcData.type,
                     npcData.name
                 );
+
+                // Set patrol points
                 npc.patrolPoints = npcData.patrolPoints.map(p => ({
                     x: p.x / 100,
                     y: 1,
                     z: p.y / 100
                 }));
+
+                // Start patrolling if there are patrol points
+                if (npc.patrolPoints.length > 0) {
+                    npc.state = NPC_STATES.PATROL;
+                } else {
+                    npc.state = NPC_STATES.IDLE;
+                    npc.idleTimer = npc.idleDuration;
+                }
+
                 this.npcs.push(npc);
 
                 // Create 3D mesh for NPC
@@ -228,6 +239,8 @@ class Game {
         if (this.state === GAME_STATES.PAUSED) {
             this.state = GAME_STATES.PLAYING;
             document.getElementById('pause-menu').classList.add('hidden');
+            // Reset lastTime to prevent huge deltaTime spike after pause
+            this.lastTime = 0;
         }
     }
 
@@ -250,6 +263,8 @@ class Game {
         if (this.state === GAME_STATES.INVENTORY) {
             this.state = GAME_STATES.PLAYING;
             document.getElementById('inventory-panel').classList.add('hidden');
+            // Reset lastTime to prevent huge deltaTime spike
+            this.lastTime = 0;
         }
     }
 
@@ -339,14 +354,24 @@ class Game {
                 document.getElementById('dialogue-box').classList.add('hidden');
                 this.state = GAME_STATES.PLAYING;
                 document.removeEventListener('keydown', closeDialogue);
+                // Reset lastTime to prevent huge deltaTime spike
+                this.lastTime = 0;
             }
         };
         document.addEventListener('keydown', closeDialogue);
     }
 
     gameLoop(currentTime) {
+        // Continue loop
+        requestAnimationFrame((time) => this.gameLoop(time));
+
         if (this.state !== GAME_STATES.PLAYING) {
-            requestAnimationFrame((time) => this.gameLoop(time));
+            return;
+        }
+
+        // Initialize lastTime on first frame
+        if (this.lastTime === 0) {
+            this.lastTime = currentTime;
             return;
         }
 
@@ -359,9 +384,6 @@ class Game {
 
         // Render
         this.render();
-
-        // Continue loop
-        requestAnimationFrame((time) => this.gameLoop(time));
     }
 
     update(deltaTime) {
