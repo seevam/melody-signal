@@ -5,7 +5,10 @@ class Game {
         this.state = GAME_STATES.LOADING;
         this.lastTime = 0;
 
-        // Initialize pixel renderer
+        // Initialize asset manager
+        this.assetManager = new AssetManager();
+
+        // Initialize pixel renderer (will be updated with assets after loading)
         this.renderer = new PixelRenderer(this.ctx);
 
         // Game systems
@@ -71,15 +74,35 @@ class Game {
 
     async loadGameData() {
         try {
+            // Update loading text
+            this.updateLoadingText('Loading assets...');
+
+            // Load assets with progress tracking
+            await this.assetManager.loadAll((progress) => {
+                this.updateLoadingProgress(progress * 60); // Assets take 60% of loading
+            });
+
+            // Update renderer with asset manager
+            this.renderer = new PixelRenderer(this.ctx, this.assetManager);
+
+            this.updateLoadingText('Loading level data...');
+            this.updateLoadingProgress(70);
+
             // Load level data
             const levelResponse = await fetch('assets/data/level1.json');
             this.levelData = await levelResponse.json();
+
+            this.updateLoadingProgress(85);
 
             // Load dialogues
             const dialogueResponse = await fetch('assets/data/dialogues.json');
             this.dialogues = await dialogueResponse.json();
 
+            this.updateLoadingProgress(100);
+            this.updateLoadingText('Ready!');
+
             console.log('Game data loaded successfully');
+            console.log('Assets loaded:', this.assetManager.images.size);
         } catch (error) {
             console.error('Error loading game data:', error);
         }
