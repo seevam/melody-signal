@@ -397,11 +397,7 @@ class Game {
         });
 
         // Update stealth system
-        this.stealthSystem.update(deltaTime);
-
-        // Update suspicion HUD
-        const suspicionPercent = (this.stealthSystem.suspicion / CONFIG.STEALTH.MAX_SUSPICION) * 100;
-        document.getElementById('suspicion-fill').style.width = suspicionPercent + '%';
+        this.stealthSystem.update(deltaTime, this.npcs);
 
         // Check if player is detected
         if (this.stealthSystem.suspicion >= CONFIG.STEALTH.DETECTION_THRESHOLD) {

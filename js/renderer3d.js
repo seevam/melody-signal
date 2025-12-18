@@ -370,8 +370,8 @@ class Renderer3D {
     }
 
     createNPC(x, y, z, name, type) {
-        // NPC body
-        const bodyGeometry = new THREE.CapsuleGeometry(0.3, 1, 8, 16);
+        // NPC body (using CylinderGeometry instead of CapsuleGeometry for r128 compatibility)
+        const bodyGeometry = new THREE.CylinderGeometry(0.3, 0.3, 1.2, 8);
         const bodyMaterial = new THREE.MeshStandardMaterial({
             color: type === 'security' ? 0x2d4a7c : 0x7d8491,
             roughness: 0.7
